@@ -1,268 +1,605 @@
-<!doctype html>
-<html lang="zh">
+﻿<!DOCTYPE html>
+<html lang="en" class="ace ace-card-on ace-tab-nav-on ace-main-nav-on ace-sidebar-on" data-theme-color="#c0e3e7">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>响应式简单个性个人博客模板</title>
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<link rel="stylesheet" type="text/css" href="statics/css/index.css" media="all" />
-	</head>
+    <title>Certy</title>
+    <meta name="description" content="">
 
-	<body class="home blog custom-background round-avatars">
-		<div class="Yarn_Background" style="background-image: url( statics/images/47fb3c_.jpg);"></div>
-		<form class="js-search search-form search-form--modal" method="get" action="search.html" role="search">
-			<div class="search-form__inner">
-				<div>
-					<div id="search-container" class="ajax_search">
-						<form method="get" id="searchform" action="">
-							<div class="filter_container"><input type="text" value="" autocomplete="off" placeholder="Type then select or enter" name="s" id="search-input" />
-								<ul id="search_filtered" class="search_filtered"></ul>
-							</div>
-							<input type="submit" name="submit" id="searchsubmit" class="searchsubmit" value="" />
-						</form>
-					</div>
-				</div>
-			</div>
-		</form>
-		<div class="navi" data-aos="fade-down">
-			<div class="bt-nav">
-				<div class="line line1"></div>
-				<div class="line line2"></div>
-				<div class="line line3"></div>
-			</div>
-			<div class="navbar animated fadeInRight">
-				<div class="inner">
-					<nav id="site-navigation" class="main-navigation">
-						<div id="main-menu" class="main-menu-container">
-							<div class="menu-menu-container">
-								<ul id="primary-menu" class="menu">
-									<li id="menu-item-17" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-17">
-										<a href="index.html">首页</a>
-									</li>
-									<li id="menu-item-173" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-173">
-										<a href="update.html">更新</a>
-									</li>
-									<li id="menu-item-78" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-78">
-										<a href="link.html">链接</a>
-									</li>
-									<li id="menu-item-252" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-252">
-										<a href="archives.html">归档</a>
-										<ul class="sub-menu">
-											<li id="menu-item-165" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-165">
-												<a href="">theme</a>
-											</li>
-											<li id="menu-item-163" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-163">
-												<a href="">Happen</a>
-											</li>
-											<li id="menu-item-924" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-924">
-												<a href="">WeWork</a>
-											</li>
-											<li id="menu-item-164" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-164">
-												<a href="">WordPress</a>
-											</li>
-										</ul>
-									</li>
-									<li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57">
-										<a href="gustbook.html">留言</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</nav>
-					<!-- #site-navigation -->
-				</div>
-			</div>
-		</div>
-		<div class="hebin" data-aos="fade-down">
-			<i class=" js-toggle-search iconfont">&#xe60e;</i>
-		</div>
-		<header id="masthead" class="overlay animated from-bottom" itemprop="brand">
-			<div class="site-branding text-center">
-				<a href="">
-					<figure>
-						<img class="custom-logo avatar" src="statics/images/omikron.png" />
-					</figure>
-				</a>
-				<h3 class="blog-description"><p>This is beauty</p></h3>
-			</div>
-			<!-- .site-branding -->
-			<div class="decor-part">
-				<div id="particles-js"></div>
-			</div>
-			<div class="animation-header">
-				<div class="decor-wrapper">
-					<svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
-						<path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
-						<path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
-						<path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
-						<path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
-						<path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
-						<path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
-						<path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, 1)"></path>
-						<path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, 1)"></path>
-					</svg>
-				</div>
-			</div>
-		</header>
-		<div id="main" class="content">
-			<div class="container">
-				<article itemscope="itemscope">
-					<div class="posts-list js-posts">
-						<div class="post post-layout-list" data-aos="fade-up">
-							<div class="status_list_item icon_kyubo">
-								<div class="status_user" style="background-image: url(statics/images/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);">
-									<div class="status_section">
-										<a href="detail.html" class="status_btn">交代是不可能交代的</a>
-										<p class="section_p">相隔上一次的更新我掰手指数一数，下意识的双腿一软，给各位小哥哥小姐姐们跪下了。自从有了对象后，周末几乎落下了主题的进度（邪魅的笑）。一边开发新的主题，一边收集您们给我反馈回来的"臭虫"，还有新的主题后台看见了一些大神在... </p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="post post-layout-list" data-aos="fade-up">
-							<div class="postnormal review ">
-								<div class="post-container review-item">
-									<div class="row review-item-wrapper">
-										<div class="col-sm-3">
-											<a rel="nofollow" href="detail.html">
-												<div class="review-item-img" style="background-image: url(statics/images/diego-ph-249471-2-800x1000.jpg);"></div>
-											</a>
-										</div>
-										<div class="col-sm-9 flex-xs-middle">
-											<div class="review-item-title">
-												<a href="detail.html" rel="bookmark">我才不会写年终总结之瞎说篇</a>
-											</div>
-											<div class="review-item-creator"><b>发布日期：</b>2017-12-30</div>
-											<span class="review-item-info"><b>总浏览量：</b>1203 reads</span>
-										</div>
-									</div>
-									<div class="review-bg-wrapper">
-										<div class="bg-blur" style="background-image: url(statics/images/diego-ph-249471-2-800x1000.jpg);"></div>
-									</div>
-								</div>
-								<div class="post-container">
-									<div class="entry-content">确实讨厌去写所谓的年终总结，在公司已经被动的想领导上交一个总结，自己就懒得去总结，不然，我觉得脑子里应该会编写出八九不离十的内容，所以正经八儿的事情略了，瞎说一下。 年初的人事调动是个人最不能接受的事情，但不接受也得接受，老板一句“这是命令...</div>
-									<div class="post-footer">
-										<a class="gaz-btn primary" href="">READ MORE</a>
-										<span class="total-comments-on-post pull-right"><a href="">31 Comments</a></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="post post-layout-list" data-aos="fade-up">
-							<div class="status_list_item icon_kyubo">
-								<div class="status_user" style="background-image: url(statics/images/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);">
-									<div class="status_section">
-										<a href="detail.html" class="status_btn">状态</a>
-										<p class="section_p">因为我这后半年飘忽不定的更新节奏，感觉真的对不住用户。最近才松下来能处理反馈的bug，顺便加快新主题 Dcras 的制作，农历年后或许能上线，准确时间，不敢说-- 为了感谢大家对 Yarn 的支持，Dcras 会以 获兑现码半价的承诺 给 Yarn ... </p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="post post-layout-list js-gallery" data-aos="fade-up">
-							<div class="post-album">
-								<div class="row content">
-									<div class="bg" style="background-image: url(statics/images/IMG_0150.jpg);"></div>
-									<div class="contentext flex-xs-middle">
-										<div class="album-title">
-											<a href="detail.html">重构图像样式测试</a>
-										</div>
-										<h5 class="review-item-creator"><b>发布日期：</b>2017-11-13</h5>
-										<div class="album-content">如眼所见是一个图像样式，必须写五十左右的文字作为这个文本框的空白填充，不写也是可以的，强迫症不能容忍空白。</div>
-									</div>
-									<div class="album-thumb-width flex-xs-middle">
-										<div class="row album-thumb no-gutter">
-											<div class="col-xs-4"><img class="thumb" src="statics/images/IMG_0150-250x250.jpg" /></div>
-											<div class="col-xs-4"><img class="thumb" src="statics/images/IMG_0149-250x250.jpg" /></div>
-											<div class="col-xs-4"><img class="thumb" src="statics/images/IMG_0146-250x250.jpg" /></div>
-											<div class="col-xs-4"><img class="thumb" src="statics/images/IMG_0147-250x250.jpg" /></div>
-											<div class="col-xs-4"><img class="thumb" src="statics/images/IMG_0148-250x250.jpg" /></div>
-											<div class="col-xs-4">
-												<a href="">5 pics</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="post post-layout-list" data-aos="fade-up">
-							<div class="postnormal review ">
-								<div class="post-container review-item">
-									<div class="row review-item-wrapper">
-										<div class="col-sm-3">
-											<a rel="nofollow" href="detail.html">
-												<div class="review-item-img" style="background-image: url(statics/images/47fb3c_9afed6c259f94589881bd55376206366mv2_d_3840_5784_s_4_2-800x450.jpg);"></div>
-											</a>
-										</div>
-										<div class="col-sm-9 flex-xs-middle">
-											<div class="review-item-title">
-												<a href="detail.html" rel="bookmark">给大家介绍一下</a>
-											</div>
-											<div class="review-item-creator"><b>发布日期：</b>2017-10-02</div>
-											<span class="review-item-info"><b>总浏览量：</b>1600 reads</span>
-										</div>
-									</div>
-									<div class="review-bg-wrapper">
-										<div class="bg-blur" style="background-image: url(statics/images/47fb3c_9afed6c259f94589881bd55376206366mv2_d_3840_5784_s_4_2-800x450.jpg);"></div>
-									</div>
-								</div>
-								<div class="post-container">
-									<div class="entry-content">现在的明星的影响力足以影响国内娱乐圈的"半壁江山"，发条微博，新浪都恐慌好几天，来来来，蹭个热点给大家介绍一下我的女朋友。</div>
-									<div class="post-footer">
-										<a class="gaz-btn primary" href="detail.html">READ MORE</a>
-										<span class="total-comments-on-post pull-right"><a href="">30 Comments</a></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- post-formats end Infinite Scroll star -->
-					<!-- post-formats -->
-					<div class="pagination js-pagination">
-						<div class="js-next pagination__load">
-							<a href=""><i class="iconfont">&#xe605;</i></a>
-						</div>
-					</div>
-					<!-- -pagination  -->
-			</div>
-		</div>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
 
-		<footer id="footer" class="overlay animated from-top">
-			<div class="decor-wrapper">
-				<svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100" preserveAspectRatio="none">
-					<path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
-					<path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
-					<path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
-					<path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
-					<path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
-					<path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
-					<path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, 1)"></path>
-					<path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, 1)"></path>
-				</svg>
-			</div>
-			<div class="socialize" data-aos="zoom-in">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
+    <!-- Icon Fonts -->
+    <link href="fonts/icomoon/style.css" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="js/plugins/highlight/solarized-light.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <!-- Modernizer -->
+    <script type="text/javascript" src="js/vendor/modernizr-3.3.1.min.js"></script>
+  </head>
+  <body>
+     <div class="ace-wrapper">
+         <header id="ace-header" class="ace-container-shift ace-logo-in ace-head-boxed ace-nav-right">
+             <div class="ace-head-inner">
+                 <div class="ace-head-container ace-container">
+                     <div class="ace-head-row">
+                         <div id="ace-head-col1" class="ace-head-col text-left">
+                             <a id="ace-logo" class="ace-logo" href="index.html">
+                                <img src="img/uploads/brand/logo.svg" alt="ace resume"><span>.Certy</span>
+                             </a>
+                         </div>
+                         
+                         <div id="ace-head-col2" class="ace-head-col text-right">
+                             <div class="ace-nav-container ace-container hidden-sm hidden-xs">
+                                 <nav id="ace-main-nav">
+                                    <ul class="clear-list">
+										<li><a href="index.html">about</a></li>
+										<li><a href="portfolio.html">portfolio</a>
+										<li><a href="testimonials.html">references</a></li>
+										<li><a href="search.html">search</a></li>
+										<li><a href="category.html">category</a></li>
+										<li><a href="contact.html">contact</a></li>
+									</ul>
+                                 </nav>
+                             </div>
+                         </div>
+                         
+                         <div id="ace-head-col3" class="ace-head-col text-right">
+                             <button id="ace-sidebar-btn" class="btn btn-icon btn-light btn-shade">
+                                 <span class="ace-icon ace-icon-side-bar-icon"></span>
+                             </button>
+                         </div>
+                     </div>
+                 </div><!-- .ace-container -->
+             </div><!-- .ace-head-inner -->
+        </header><!-- #ace-header -->
+
+        
+        <nav id="ace-nav-sm" class="ace-nav hidden-lg hidden-md">
+            <ul class="clear-list">
 				<li>
-					<a title="weibo" class="socialicon" href=""><i class="iconfont" aria-hidden="true">&#xe601;</i></a>
-				</li>
-				<li class="wechat">
-					<a class="socialicon"><i class="iconfont">&#xe609;</i></a>
-					<div class="wechatimg"><img src="statics/images/49D3746D-7519-B709-83E4-65BD1927C4E7.jpg"></div>
+					<a href="index.html" data-tooltip="Home"><img class="avatar avatar-42" src="img/uploads/avatar/avatar-42x42.png" alt=""></a>
 				</li>
 				<li>
-					<a title="QQ" class="socialicon" href="" target="_blank"><i class="iconfont" aria-hidden="true">&#xe616;</i></a>
+					<a href="experience.html" data-tooltip="Experience"><span class="ace-icon ace-icon-experience"></span></a>
 				</li>
-			</div>
-			<div class="cr">
-				Copyright&copy;2018. Design by
-				<a href="">17sucai</a>
-			</div>
-			<script type='text/javascript' src='statics/js/jquery.min.js'></script>
-			<script type='text/javascript' src='statics/js/plugins.js'></script>
-			<script type='text/javascript' src='statics/js/script.js'></script>
-			<script type='text/javascript' src='statics/js/particles.js'></script>
-			<script type='text/javascript' src='statics/js/aos.js'></script>
+				<li>
+					<a href="portfolio.html" data-tooltip="Portfolio"><span class="ace-icon ace-icon-portfolio"></span></a>
+				</li>
+				<li>
+					<a href="testimonials.html" data-tooltip="References"><span class="ace-icon ace-icon-references"></span></a>
+				</li>
+				<li>
+					<a href="contact.html" data-tooltip="Contact"><span class="ace-icon ace-icon-contact"></span></a>
+				</li>
+				<li>
+					<a href="category.html" data-tooltip="Blog"><span class="ace-icon ace-icon-blog"></span></a>
+				</li>
+			</ul>
+        </nav><!-- #ace-tab-nav-sm -->
 
-	</body>
+        <article id="ace-card" class="ace-card bg-primary">
+			<div class="ace-card-inner text-center">
+				<img class="avatar avatar-195" src="img/uploads/avatar/avatar-195x195.png" width="195" height="195" alt="">
+				<h1>Ola Lowe</h1>
+				<p class="text-muted">Florist | Decorator</p>
+				<ul class="ace-social clear-list">
+					<li><a><span class="ace-icon ace-icon-facebook"></span></a></li>
+					<li><a><span class="ace-icon ace-icon-twitter"></span></a></li>
+					<li><a><span class="ace-icon ace-icon-google-plus"></span></a></li>
+					<li><a><span class="ace-icon ace-icon-instagram"></span></a></li>
+					<li><a><span class="ace-icon ace-icon-pinterest"></span></a></li>
+				</ul>
+			</div>
 
+			<footer class="ace-card-footer">
+				<a class="btn btn-lg btn-block btn-thin btn-upper " href="#">Download Resume</a>
+			</footer>
+		</article><!-- #ace-card -->
+
+        <div id="ace-content" class="ace-container-shift">
+            <div class="ace-container">
+
+                
+                    <div id="ace-nav-wrap" class="hidden-sm hidden-xs">
+                        <div class="ace-nav-cont">
+                            <div id="ace-nav-scroll">
+                                <nav id="ace-nav" class="ace-nav">
+                                    <ul class="clear-list">
+										<li>
+											<a href="index.html" data-tooltip="Home"><img class="avatar avatar-42" src="img/uploads/avatar/avatar-42x42.png" alt=""></a>
+										</li>									
+										<li>
+											<a href="experience.html" data-tooltip="Experience"><span class="ace-icon ace-icon-experience"></span></a>
+										</li>
+										<li>
+											<a href="portfolio.html" data-tooltip="Portfolio"><span class="ace-icon ace-icon-portfolio"></span></a>
+										</li>
+										<li>
+											<a href="testimonials.html" data-tooltip="References"><span class="ace-icon ace-icon-references"></span></a>
+										</li>
+										<li>
+											<a href="contact.html" data-tooltip="Contact"><span class="ace-icon ace-icon-contact"></span></a>
+										</li>
+										<li>
+											<a href="category.html" data-tooltip="Blog"><span class="ace-icon ace-icon-blog"></span></a>
+										</li>
+									</ul>
+                                </nav>
+                            </div>
+
+                            <div id="ace-nav-tools" class="hidden">
+                                <span class="ace-icon ace-icon-dots-three-horizontal"></span>
+
+                                <button id="ace-nav-arrow" class="clear-btn">
+                                    <span class="ace-icon ace-icon-chevron-thin-down"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="ace-nav-btm"></div>
+                    </div><!-- .ace-nav-wrap -->
+
+                <div class="ace-paper-stock">
+                    <main class="ace-paper clearfix">
+                        <div class="ace-paper-cont clear-mrg">
+						
+						<!-- START: PAGE CONTENT -->
+    <div class="padd-box clear-mrg">
+        <section class="section brd-btm">
+            <div class="row">
+                <div class="col-sm-12 clear-mrg text-box">
+                    <h2 class="title-lg text-upper">About Me</h2>
+
+                    <p><b>Helo, I’m Ola Lowe!</b><br>
+                        Logo or your Company Name, unless of course you are Microsoft or the Yellow Pages online directorye core of
+                        your marketing, the central theme around your products and services.
+                        Your brand is not your Logo or your Company Name, unless of course you are Microsoft or the Yellow Pages
+                        online directory.</p>
+
+                    <p class="text-right">
+                        <img src="img/uploads/signature.png" alt="">
+                    </p>
+                </div>
+            </div>
+        </section><!-- .section -->
+
+        <section class="section brd-btm">
+            <div class="row">
+                <div class="col-sm-6 clear-mrg">
+                    <h2 class="title-thin text-muted">personal information</h2>
+
+                    <dl class="dl-horizontal clear-mrg">
+                        <dt class="text-upper">Full Name</dt>
+                        <dd>Ola Maria Lowe</dd>
+
+                        <dt class="text-upper">D.o.b.</dt>
+                        <dd>05 Sep 1986</dd>
+
+                        <dt class="text-upper">address</dt>
+                        <dd>24058, Belgium, Brussels,
+                            Liutte 27, BE</dd>
+
+                        <dt class="text-upper">e-mail</dt>
+                        <dd><a href="mailto:robertsmith@company.com">robertsmith@company.com</a></dd>
+
+                        <dt class="text-upper">phone</dt>
+                        <dd>+1 256 254 84 56</dd>
+
+                        <dt class="text-upper">freelance</dt>
+                        <dd>Available</dd>
+                    </dl>
+                </div><!-- .col-sm-6 -->
+
+                <div class="col-sm-6 clear-mrg">
+                    <h2 class="title-thin text-muted">languages</h2>
+
+                    <div class="progress-bullets ace-animate" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10">
+                        <strong class="progress-title">English</strong>
+                        <span class="progress-bar">
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                        </span>
+                        <span class="progress-text text-muted">native</span>
+                    </div>
+
+                    <div class="progress-bullets ace-animate" role="progressbar" aria-valuenow="8" aria-valuemin="0" aria-valuemax="10">
+                        <strong class="progress-title">Spanish</strong>
+                        <span class="progress-bar">
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet"></span>
+                            <span class="bullet"></span>
+                        </span>
+                        <span class="progress-text text-muted">intermediate</span>
+                    </div>
+
+                    <div class="progress-bullets ace-animate" role="progressbar" aria-valuenow="7" aria-valuemin="0" aria-valuemax="10">
+                        <strong class="progress-title">Italian</strong>
+                        <span class="progress-bar">
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet fill"></span>
+                            <span class="bullet"></span>
+                            <span class="bullet"></span>
+                            <span class="bullet"></span>
+                        </span>
+                        <span class="progress-text text-muted">begginer</span>
+                    </div>
+                </div><!-- .col-sm-6 -->
+            </div><!-- .row -->
+        </section><!-- .section -->
+
+        <section class="section brd-btm">
+            <div class="row">
+                <div class="col-sm-6 clear-mrg">
+                    <h2 class="title-thin text-muted">professional skills</h2>
+
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="progress-chart ace-animate" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" data-text="90%" data-value="0.9"></div>
+                                <strong class="progress-title">UX Design</strong>
+                            </div>
+                        </div><!-- .col-xs-4 -->
+
+                        <div class="col-xs-4">
+                            <div class="progress-chart ace-animate" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" data-text="81%" data-value="0.81"></div>
+                                <strong class="progress-title">PHP & MySql</strong>
+                            </div>
+                        </div><!-- .col-xs-4 -->
+
+                        <div class="col-xs-4">
+                            <div class="progress-chart ace-animate" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" data-text="66%" data-value="0.66"></div>
+                                <strong class="progress-title">UI Design</strong>
+                            </div>
+                        </div><!-- .col-xs-4 -->
+                    </div><!-- .row -->
+                </div><!-- .col-sm-6 -->
+
+                <div class="col-sm-6 clear-mrg">
+                    <h2 class="title-thin text-muted">professional skills</h2>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">Php & MySQL</strong>
+                        <div class="progress-bar" data-text="90%" data-value="0.9"></div>
+                    </div>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">Javascript</strong>
+                        <div class="progress-bar" data-text="80%" data-value="0.8"></div>
+                    </div>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">UX Design</strong>
+                        <div class="progress-bar" data-text="80%" data-value="0.8"></div>
+                    </div>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">UI Design</strong>
+                        <div class="progress-bar" data-text="70%" data-value="0.7"></div>
+                    </div>
+                </div><!-- .col-sm-6 -->
+            </div><!-- .row -->
+        </section><!-- .section -->
+
+        <section class="section brd-btm">
+            <div class="row">
+                <div class="col-sm-6 clear-mrg">
+                    <h2 class="title-thin text-muted">professional skills</h2>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">Php & MySQL</strong>
+                        <div class="progress-bar" data-text="90%" data-value="0.9"></div>
+                    </div>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">Javascript</strong>
+                        <div class="progress-bar" data-text="80%" data-value="0.8"></div>
+                    </div>
+
+                    <div class="progress-line ace-animate" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                        <strong class="progress-title">UX Design</strong>
+                        <div class="progress-bar" data-text="80%" data-value="0.8"></div>
+                    </div>
+                </div><!-- .col-sm-6 -->
+
+                <div class="col-sm-6 clear-mrg">
+                    <h2 class="title-thin text-muted">personal characteristics</h2>
+
+                    <ul class="styled-list clear-mrg">
+                        <li>Lake Marcelview</li>
+                        <li>New Tara</li>
+                        <li>Abbeyshire</li>
+                        <li>Kassulkechester</li>
+                    </ul>
+                </div><!-- .col-sm-6 -->
+            </div><!-- .row -->
+        </section><!-- .section -->
+
+        <section class="section brd-btm">
+            <div class="row">
+                <div class="col-sm-12 clear-mrg">
+                    <h2 class="title-thin text-muted">interests</h2>
+
+                    <ul class="icon-list icon-list-col3 clearfix">
+                        <li><span class="ace-icon ace-icon-music"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-blog"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-blog"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-blog"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-blog"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-music"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-blog"></span> North Adella</li>
+                        <li><span class="ace-icon ace-icon-blog"></span> North Adella</li>
+                    </ul>
+                </div>
+            </div>
+        </section><!-- .section -->
+
+        <section class="section">
+            <h2 class="title-thin text-muted">Awards and Achievements</h2>
+
+            <div class="row">
+                <div class="col-sm-6 clear-mrg">
+                    <div class="award-box">
+                        <figure class="award-img">
+                            <img src="img/uploads/awards/award-01.png" alt="">
+                        </figure>
+
+                        <h3 class="award-title">Lake Marcelview</h3>
+
+                        <div class="award-text text-muted clear-mrg">
+                            <p>Your brand is the core of your marketing, the central theme around your products and services.
+                               Your brand is not your Logo or your Company Name</p>
+                        </div>
+                    </div>
+                </div><!-- .col-sm-6 -->
+
+                <div class="col-sm-6 clear-mrg">
+                    <div class="award-box">
+                        <figure class="award-img">
+                            <img src="img/uploads/awards/award-02.png" alt="">
+                        </figure>
+
+                        <h3 class="award-title">Lake Marcel Awards</h3>
+
+                        <div class="award-text text-muted clear-mrg">
+                            <p>Your brand is the core of your marketing, the central theme around your products and services.</p>
+                        </div>
+                    </div>
+                </div><!-- .col-sm-6 -->
+            </div><!-- .row -->
+        </section><!-- .section -->
+    </div><!-- .padd-box -->
+<!-- END: PAGE CONTENT -->
+						
+                </div><!-- .ace-paper-cont -->
+            </main><!-- .ace-paper -->
+        </div><!-- .ace-paper-stock -->
+
+        </div><!-- .ace-container -->
+    </div><!-- #ace-content -->
+
+    <div id="ace-sidebar">
+		<button id="ace-sidebar-close" class="btn btn-icon btn-light btn-shade">
+			<span class="ace-icon ace-icon-close"></span>
+		</button>
+
+		<div id="ace-sidebar-inner">
+			<nav id="ace-main-nav-sm" class="visible-xs visible-sm text-center">
+				<ul class="clear-list">
+					<li><a href="index.html">about</a></li>
+					<li><a href="portfolio.html">portfolio</a>
+					<li><a href="testimonials.html">references</a></li>
+					<li class="has-sub-menu"><a href="#">pages</a>
+						<ul class="sub-menu">
+							<li><a href="typography.html">typography</a></li>
+							<li><a href="components.html">components</a></li>
+							<li><a href="search.html">search</a></li>
+							<li><a href="404.html">404</a></li>
+						</ul>
+					</li>
+					<li class="has-sub-menu"><a href="category.html">blog</a>
+						<ul class="sub-menu">
+							<li><a href="single.html">single</a></li>
+							<li><a href="single-image.html">single image</a></li>
+							<li><a href="single-slider.html">single slider</a></li>
+							<li><a href="single-youtube.html">single youtube</a></li>
+							<li><a href="single-vimeo.html">single vimeo</a></li>
+							<li><a href="single-dailymotion.html">single dailymotion</a></li>
+							<li><a href="single-soundcloud.html">single soundcloud</a></li>
+							<li><a href="single-video.html">single video</a></li>
+							<li><a href="single-audio.html">single audio</a></li>
+						</ul>
+					</li>
+					<li><a href="contact.html">contact</a></li>
+				</ul>
+			</nav><!-- #ace-main-nav-sm -->
+
+			<article class="ace-card bg-primary">
+				<div class="ace-card-inner text-center">
+					<img class="avatar avatar-195" src="img/uploads/avatar/avatar-195x195.png" width="195" height="195" alt="">
+					<h1>Ola Lowe</h1>
+					<p class="text-muted">Florist | Decorator</p>
+					<ul class="ace-social clear-list">
+						<li><a><span class="ace-icon ace-icon-facebook"></span></a></li>
+						<li><a><span class="ace-icon ace-icon-twitter"></span></a></li>
+						<li><a><span class="ace-icon ace-icon-google-plus"></span></a></li>
+						<li><a><span class="ace-icon ace-icon-instagram"></span></a></li>
+						<li><a><span class="ace-icon ace-icon-pinterest"></span></a></li>
+					</ul>
+				</div>				
+			</article><!-- #ace-card -->
+
+			<aside class="widget-area">
+				<section class="widget widget_search">
+					<form role="search" method="get" class="search-form" action="http://sc.chinaz.com/jiaoben/">
+						<label>
+							<span class="screen-reader-text">Search for:</span>
+							<input type="search" class="search-field" placeholder="Search" value="" name="s">
+						</label>
+						<button type="submit" class="search-submit">
+							<span class="screen-reader-text">Search</span>
+							<span class="ace-icon ace-icon-search"></span>
+						</button>
+					</form>
+				</section>
+
+				<section class="widget widget_posts_entries">
+					<h2 class="widget-title">popular posts</h2>
+					<ul>
+						<li>
+							<a class="post-image" href="">
+								<img src="http://noemi.px-lab.com/wp-content/uploads/2016/05/tttt-70x70.png" alt="">
+							</a>
+							<div class="post-content">
+								<h3>
+									<a href="">contextual advertising</a>
+								</h3>
+							</div>
+							<div class="post-category-comment">
+								<a href="" class="post-category">Work</a>
+								<a href="" class="post-comments">256 comments</a>
+							</div>
+						</li>
+
+						<li>
+							<a class="post-image" href="">
+								<img src="http://noemi.px-lab.com/wp-content/uploads/2016/05/IMG_8945-1-70x70.jpg" alt="">
+							</a>
+							<div class="post-content">
+								<h3>
+									<a href="">grilling tips for the dog days of summer</a>
+								</h3>
+							</div>
+							<div class="post-category-comment">
+								<a href="" class="post-category">Work</a>
+								<a href="" class="post-comments">256 comments</a>
+							</div>
+						</li>
+
+						<li>
+							<a class="post-image" href="">
+								<img src="http://noemi.px-lab.com/wp-content/uploads/2016/05/15-70x70.png" alt="">
+							</a>
+							<div class="post-content">
+								<h3><a href=""></a>branding do you know who are</h3>
+							</div>
+							<div class="post-category-comment">
+								<a href="" class="post-category">Work</a>
+								<a href="" class="post-comments">256 comments</a>
+							</div>
+						</li>
+					</ul>
+				</section>
+
+				<section id="tag_cloud-2" class="widget widget_tag_cloud">
+					<h2 class="widget-title">Tags</h2>
+					<div class="tagcloud">
+						<a href="http://sc.chinaz.com/jiaoben/tag/audios/" class="tag-link-5 tag-link-position-1" title="1 topic" style="font-size: 1em;">Audios</a>
+						<a href="" class="tag-link-7 tag-link-position-2" title="1 topic" style="font-size: 1em;">Freelance</a></div>
+				</section>
+
+				<section id="recent-posts-3" class="widget widget_recent_entries">
+					<h4 class="widget-title">Recent Posts</h4>
+					<ul>
+						<li>
+							<a href="">Global Travel And Vacations  Luxury Travel On A Tight  Budget</a>
+							<div class="post-category-comment">
+								<a href="" class="post-category">Photography</a>
+								<a href="" class="post-comments">256 comments</a>
+							</div>
+						</li>
+						<li>
+							<a href="">cooking for one</a>
+							<div class="post-category-comment">
+								<a href="" class="post-category">Work</a>
+								<a href="" class="post-comments">256 comments</a>
+							</div>
+						</li>
+						<li>
+							<a href="">An Ugly Myspace Profile Will  Sure Ruin Your Reputation</a>
+							<div class="post-category-comment">
+								<a href="" class="post-category">Photography</a>
+								<a href="" class="post-comments">256 comments</a>
+							</div>
+						</li>
+					</ul>
+				</section>
+
+				<section class="widget widget_categories">
+					<h4 class="widget-title">post categories</h4>
+					<ul>
+						<li class="cat-item"><a href="">Audios</a>5</li>
+						<li class="cat-item"><a href="">Daili Inspiration</a>2</li>
+						<li class="cat-item"><a href="">Freelance</a>27</li>
+						<li class="cat-item"><a href="">Links</a>5</li>
+						<li class="cat-item"><a href="">Mobile</a>2</li>
+						<li class="cat-item"><a href="">Phography</a>27</li>
+					</ul>
+				</section>
+			</aside>
+
+		</div><!-- #ace-sidebar-inner -->
+	</div><!-- #ace-sidebar -->
+
+    <footer id="ace-footer" class="ace-container-shift">
+        <div class="ace-container">
+			<div class="ace-footer-cont clear-mrg">
+				<p class="text-center">Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://www.17sucai.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>				
+			</div>
+        </div><!-- .ace-container -->
+    </footer><!-- #ace-footer -->
+
+    <!-- Triangle Shapes -->
+    <svg id="ace-bg-shape-1" class="hidden-sm hidden-xs" height="519" width="758">
+        <polygon points="0,455,693,352,173,0,92,0,0,71" style="fill:#d2d2d2;stroke:purple;stroke-width:0; opacity: 0.5">
+    </svg>
+
+    <svg id="ace-bg-shape-2" class="hidden-sm hidden-xs" height="536" width="633">
+        <polygon points="0,0,633,0,633,536" style="fill:#c0e3e7;stroke:purple;stroke-width:0" />
+    </svg>
+</div><!-- .ace-wrapper -->
+
+<!-- Scripts -->
+<script type="text/javascript" src="js/vendor/jquery-1.12.4.min.js"></script>
+
+
+<!---<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?key=AIzaSyDiwY_5J2Bkv2UgSeJa4NOKl6WUezSS9XA"></script>--->
+<script type="text/javascript" src="js/plugins/highlight/highlight.pack.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="js/plugins/isotope.pkgd.min.js"></script>
+<script type="text/javascript" src="js/plugins/progressbar.min.js"></script>
+<script type="text/javascript" src="js/plugins/slick.min.js"></script>
+
+<script type="text/javascript" src="js/options.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
 </html>
