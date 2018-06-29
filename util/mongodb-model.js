@@ -22,7 +22,7 @@ const articleSchema = new Schema( {
         author: String,
         fromUrl: String
     }
-} ) ;
+}, { autoIndex: true } ) ;
 
 const articleModel = mongoose.model( 'article', articleSchema ) ;
 
