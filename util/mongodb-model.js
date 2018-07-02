@@ -34,7 +34,8 @@ const tagSchema = new Schema( {
     create: { type: Date, default: Date.now() }, //创建时间
     update: { type: Date, default: Date.now() }, //最近更新时间
     background: String, //背景颜色
-    color: String //文字颜色
+    color: String, //文字颜色
+    hot: { type: Boolean, default: false } //当前标签是否是热门标签
 }, { autoIndex: true } ) ;
 
 const articleModel = mongoose.model( 'article', articleSchema ) ;

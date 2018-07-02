@@ -75,3 +75,57 @@ handles.getTagList = function (req, res) {
             } )
         } )
 } ;
+
+handles.updateTag = function (req, res) {
+    const data = req.body.data ;
+    mongodbMode.tagModel.updateOne( { _id: data._id },
+        { label: data.label, color: data.color, background: data.background, update: Date.now() },
+        function ( err ) {
+            if ( err ) res.json( resHandler.createError( 'SR-006', '数据库更新错误' ) ) ;
+            res.json( resHandler.sendSuccess() ) ;
+        })
+} ;
+
+handles.delTag = function (req, res) {
+    const data = req.body.data ;
+    mongodbMode.tagModel.remove( { _id: data._id }, function (err) {
+        if ( err ) res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.getAllTags = function (req, res) {
+    mongodbMode.tagModel.find( {}, function (err, result) {
+        if ( err ) res.json( resHandler.createError( 'SR-003', '数据库读取错误' ) ) ;
+        res.json( { status: 0, data: result } ) ;
+    } )
+} ;
+
+handles.updateHotTags = function (req, res) {
+    const data = req.body.data ;
+    console.log( data ) ;
+    mongodbMode.tagModel.updateOne( { _id: data._id }, { hot: data.hot }, function (err) {
+        if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.getHotTags = function (req, res) {
+    mongodbMode.tagModel.find( { hot: true }, { _id: 0, label: 1, value: 1, background: 1, color: 1 }, function (err, result) {
+        if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        res.json( { status: 0, data: result } )
+    } )
+} ;
+
+handles.getArticleListPage = function (req, res) {
+    const data = req.body.data ;
+    const { pageNum, pageSize } = data ;
+    mongodbMode.articleModel.find( {} )
+        .sort( { _id: -1 } )
+        .skip( ( pageNum - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec( function (err, result) {
+            if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+            res.json( { status: 0, data: result } ) ;
+        } )
+} ;

@@ -3,6 +3,8 @@ const handlers = module.exports ;
 //返回错误信息的生成函数
 //03 数据库读取错误
 //04 数据库存储错误
+//06 数据库更新错误
+//07 数据库删除错误
 handlers.createError = function ( errorObject, errorMessage ) {
     if ( errorObject ) {
         return {
