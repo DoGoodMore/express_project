@@ -17,14 +17,17 @@ const articleSchema = new Schema( {
         }
     ], //评论列表
     description: String, //文章描述
+    tags: Array, //文章标签
     good: Number, //点赞数
     noGood: Number, //踩数
+    views: { type: Number, default: 0 },
     original: Boolean, //是否原创
     from: {
         author: String, //来源作者
         fromUrl: String //来源url
     }, //来源对象
-    poster: String //封面图片地址
+    poster: String, //封面图片地址
+    hot: { type: Boolean, default: false }//当前文章是否在热门中
 }, { autoIndex: true } ) ;
 
 //标签数据库Model

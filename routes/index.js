@@ -29,4 +29,25 @@ router.post( '/tags/getHotTags', handle.getHotTags ) ;
 //获取分页文章列表
 router.post( '/article/getArticleListPage', handle.getArticleListPage ) ;
 
+//删除对应文章
+router.post( '/article/delArticle', handle.delArticle ) ;
+
+//更新当前文章是否为热门
+router.post( '/article/updateArticleHot', handle.updateArticleHot ) ;
+
+//获取所有热门文章
+router.post( '/article/getHotArticles', handle.getHotArticles ) ;
+
+//获取网站公告置顶信息
+router.post( '/common/getFileInfo', handle.getFileInfo ) ;
+
+//修改网站的公告内容
+router.post( '/common/changePostFile', handle.changePostFile ) ;
+
+//修改网站的置顶内容
+router.post( '/common/changeToppingFile', handle.changeToppingFile ) ;
+
+//获取文章
+router.post( '/article/getArticleDetail', handle.getArticleDetail ) ;
+
 module.exports = router ;
