@@ -50,4 +50,13 @@ router.post( '/common/changeToppingFile', handle.changeToppingFile ) ;
 //获取文章
 router.post( '/article/getArticleDetail', handle.getArticleDetail ) ;
 
+//获取相似文章列表
+router.post( '/article/getLikeArticles', handle.getLikeArticles ) ;
+
+//根据ID获取某个文章
+router.post( '/article/getArticleById', handle.getArticleById ) ;
+
+//更新文章内容
+router.post( '/article/update', handle.updateArticle ) ;
+
 module.exports = router ;

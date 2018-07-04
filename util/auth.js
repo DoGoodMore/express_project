@@ -5,6 +5,7 @@ const handlers = module.exports ;
 //04 数据库存储错误
 //06 数据库更新错误
 //07 数据库删除错误
+//08 本地文件删除错误
 handlers.createError = function ( errorObject, errorMessage ) {
     if ( errorObject ) {
         return {
@@ -30,4 +31,5 @@ handlers.sendSuccess = function () {
         status: 0,
         message: '操作成功'
     }
-}
+} ;
+

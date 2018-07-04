@@ -6,7 +6,7 @@ const resHandler = require( './auth' ) ;
 const mongodbMode = require( './mongodb-model' ) ;
 const countJs = require( '../count/count' ) ;
 const fileInfo = require( '../count/fileInfo' ) ;
-
+const tools = require( './tools' ) ;
 
 handles.articleAdd = function ( req, res ) {
     const data = req.body.data ;
@@ -106,7 +106,6 @@ handles.getAllTags = function (req, res) {
 
 handles.updateHotTags = function (req, res) {
     const data = req.body.data ;
-    console.log( data ) ;
     mongodbMode.tagModel.updateOne( { _id: data._id }, { hot: data.hot }, function (err) {
         if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
         res.json( resHandler.sendSuccess() ) ;
@@ -185,6 +184,102 @@ handles.getArticleDetail = function (req, res) {
     const data = req.body.data ;
     mongodbMode.articleModel.find( { _id: data.id }, function (err, result) {
         if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
-        res.json( { status: 0, data: result[ 0 ] } ) ;
+        //todo : 待优化
+        mongodbMode.articleModel.find( {}, { title: 1 }, function (err, allArray) {
+            if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+            let pre = null, next = null ;
+            if ( allArray && allArray.length ) {
+                allArray.forEach( function (item, index) {
+                    if ( ( item._id + '' ) === data.id ) {
+                        pre = allArray[ index - 1 ] ? allArray[ index - 1 ] : null ;
+                        next = allArray[ index + 1 ] ? allArray[ index + 1 ] : null ;
+                    }
+                } )
+            }
+            res.json( { status: 0, data: result[ 0 ], pre: pre, next: next } ) ;
+        } ) ;
+
     } )
+} ;
+
+handles.getLikeArticles = function (req, res) {
+    const data = req.body.data ;
+    mongodbMode.articleModel.find( { tags: data.tags }, { title: 1 }, function (err, result) {
+        if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        if ( result && result.length ) {
+            result.find( function (item, index) {
+                if ( ( item._id + '' ) === data.id ) {
+                    result.splice( index, 1 ) ;
+                    return true ;
+                }
+            } )
+        }
+        res.json( { status: 0, data: result } ) ;
+    } )
+} ;
+
+handles.getArticleById = function (req, res) {
+    const data = req.body.data ;
+    mongodbMode.articleModel.findOne( { _id: data.id }, function (err, result) {
+        if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        res.json( { status: 0, data: result } ) ;
+    } )
+} ;
+
+handles.updateArticle = function (req, res) {
+    const data = req.body.data ;
+    if ( data[ `imgFile` ] ) {
+        mongodbMode.articleModel.findOne( { _id: data._id }, { poster: 1, _id: 0 }, function (err, result) {
+            if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+            if ( result[ `poster` ] ) {
+                const imgUrl = result[ `poster` ].replace( `http://${serviceInfo.ip}:${serviceInfo.port}`, `` ) ;
+                fs.unlink( `../public${imgUrl}`, function (err) {
+                    if ( err ) res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
+                    let imgUrl = '' ;
+                    if ( data[ 'imgFile' ] ) {
+                        const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
+                        let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
+                        imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
+                        fs.writeFile( `../public/images/articles_img/${imgName}`, dataBuffer, function(err) {
+                            if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) ) ;
+                            mongodbMode.articleModel.update( { _id: data._id }, {
+                                title: data.title,
+                                author: data.author || 'xyzzzzz',
+                                content: data.content,
+                                update: Date.now(),
+                                description: data.description,
+                                tags: data.tags,
+                                original: data.original,
+                                from: {
+                                    author: data.original ? '' : data.from.author,
+                                    fromUrl: data.original ? '' : data.from.fromUrl
+                                },
+                                poster: imgUrl
+                            }, function (err) {
+                                if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+                                res.json( resHandler.sendSuccess() ) ;
+                            } )
+                        }) ;
+                    }
+                } )
+            }
+        } ) ;
+    } else {
+        mongodbMode.articleModel.update( { _id: data._id }, {
+            title: data.title,
+            author: data.author || 'xyzzzzz',
+            content: data.content,
+            update: Date.now(),
+            description: data.description,
+            tags: data.tags,
+            original: data.original,
+            from: {
+                author: data.original ? '' : data.from.author,
+                fromUrl: data.original ? '' : data.from.fromUrl
+            }
+        }, function (err) {
+            if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+            res.json( resHandler.sendSuccess() ) ;
+        } )
+    }
 } ;
