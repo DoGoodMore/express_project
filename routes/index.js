@@ -59,4 +59,22 @@ router.post( '/article/getArticleById', handle.getArticleById ) ;
 //更新文章内容
 router.post( '/article/update', handle.updateArticle ) ;
 
+//新增文章类别的接口
+router.post( '/types/addTypes', handle.addNewType ) ;
+
+//获取类别接口分页数据
+router.post( '/types/getTypeListPage', handle.getTypeListPage ) ;
+
+//获取所有的一级类别的列表
+router.post( '/types/getFirstTypeList', handle.getFirstTypeList ) ;
+
+//删除类别
+router.post( '/types/delType', handle.delType ) ;
+
+//获取所有类别接口
+router.post( '/types/getAllTypeList', handle.getAllTypeList ) ;
+
+//更新类别信息
+router.post( '/types/updateType', handle.updateType ) ;
+
 module.exports = router ;

@@ -29,12 +29,13 @@ handles.articleAdd = function ( req, res ) {
         comments: [],
         description:  data[ 'description' ],
         good: 0,
+        type: data[ `articleType` ],
         noGood: 0,
         original: data.original,
         from: {
-            author: data.original ? data.from.author : '',
-            fromUrl: data.original ? data.from.fromUrl : ''
-        },
+            author: data.original ? '' : data.from.author,
+            fromUrl: data.original ? '' : data.from.fromUrl
+},
         views: 0,
         poster: imgUrl
     } ).save( function ( err ) {
@@ -45,7 +46,6 @@ handles.articleAdd = function ( req, res ) {
 
 handles.addNewTag = function ( req, res ) {
     const data = req.body.data ;
-
     new mongodbMode.tagModel( {
         label: data.label,
         value: countJs.tagCount,
@@ -282,4 +282,74 @@ handles.updateArticle = function (req, res) {
             res.json( resHandler.sendSuccess() ) ;
         } )
     }
+} ;
+
+handles.addNewType = function (req, res) {
+    const { typeName, typeLevel, typePath, upperType, typeSort } = req.body.data ;
+    new mongodbMode.typeModel( {
+        typeName,
+        typeLevel,
+        upperType: typeLevel === 1 ? 1 : upperType,
+        typePath,
+        typeSort: typeLevel === 1 ? ( typeSort ? typeSort : 0 ) : 0,
+        value: countJs.typeCount,
+    } ).save( function (err) {
+        if ( err ) res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
+        countJs.typeCount ++ ;
+        fs.writeFile('../count/count.json', JSON.stringify( countJs ), function (err) {
+            if ( err ) return console.log( err ) ;
+            res.json( resHandler.sendSuccess() ) ;
+        }) ;
+    } ) ;
+} ;
+
+handles.getTypeListPage = function (req, res) {
+    const data = req.body.data ;
+    const { pageNum, pageSize } = data ;
+    mongodbMode.typeModel.find( {} )
+        .sort( { _id: -1 } )
+        .skip( ( pageNum - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec( function (err, result) {
+            if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+            mongodbMode.typeModel.count( {}, function (err, count) {
+                if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+                res.json( { status: 0, data: result, total: count } ) ;
+            } )
+        } )
+} ;
+
+handles.getFirstTypeList = function (req, res) {
+    mongodbMode.typeModel.find( { upperType: 1 }, function (err, result) {
+        if ( err ) res.json( resHandler.createError( `SR-004`, `数据库读取错误` ) ) ;
+        res.json( { status: 0, data: result } ) ;
+    } )
+} ;
+
+handles.delType = function (req, res) {
+    const data = req.body.data ;
+    mongodbMode.typeModel.remove( { _id: data.id }, function (err) {
+        if ( err ) res.json( resHandler.createError( `SR-007`, `数据库删除失败` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.getAllTypeList = function (req, res) {
+    mongodbMode.typeModel.find( {}, function (err, result) {
+        if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        res.json( { status: 0, data: result } ) ;
+    } )
+} ;
+
+handles.updateType = function (req, res) {
+    const data = req.body.data ;
+    const { typeLevel, typeName, typePath, typeSort, upperType } = data ;
+    mongodbMode.typeModel.update( { _id: data._id }, {
+        typeLevel, typeName, typePath,
+        upperType: typeLevel === 1 ? 1 : upperType,
+        typeSort: typeLevel === 1 ? ( typeSort ? typeSort : 0 ) : 0
+    }, function (err) {
+        if ( err ) res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
 } ;

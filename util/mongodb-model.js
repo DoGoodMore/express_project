@@ -16,6 +16,7 @@ const articleSchema = new Schema( {
             content: String //评论内容
         }
     ], //评论列表
+    type: String,
     description: String, //文章描述
     tags: Array, //文章标签
     good: Number, //点赞数
@@ -41,11 +42,26 @@ const tagSchema = new Schema( {
     hot: { type: Boolean, default: false } //当前标签是否是热门标签
 }, { autoIndex: true } ) ;
 
+//文章分类数据库Model
+const typeSchema = new Schema( {
+    typeName: String, //类别名称
+    typeLevel: Number, //类别级别
+    upperType: Number, //上级类别
+    typePath: String, //类别路径
+    value: Number, //value值
+    typeSort: { type: Number, default: 0 },
+    create: { type: Date, default: Date.now() } //创建时间
+} ) ;
+
 const articleModel = mongoose.model( 'article', articleSchema ) ;
+
 const tagModel = mongoose.model( 'tag', tagSchema ) ;
+
+const typeModel = mongoose.model( 'type', typeSchema ) ;
 
 module.exports = {
     articleModel,
-    tagModel
+    tagModel,
+    typeModel
 } ;
 
