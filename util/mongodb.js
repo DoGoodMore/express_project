@@ -1,7 +1,7 @@
 const mongoose = require( 'mongoose' ) ;
 const settings = require( './settings' ) ;
 
-const url = `mongodb://${settings.ip}/${settings.db}` ;
+const url = `mongodb://localhost:27017/${settings.db}` ;
 
 mongoose.connect( url ) ;
 

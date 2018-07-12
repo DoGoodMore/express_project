@@ -77,4 +77,7 @@ router.post( '/types/getAllTypeList', handle.getAllTypeList ) ;
 //更新类别信息
 router.post( '/types/updateType', handle.updateType ) ;
 
+//根据文章类型获取对应的文章列表
+router.post( '/article/getArticleListByType', handle.getArticleListByType ) ;
+
 module.exports = router ;

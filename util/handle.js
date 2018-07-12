@@ -152,7 +152,7 @@ handles.updateArticleHot = function (req, res) {
 } ;
 
 handles.getHotArticles = function (req, res) {
-    mongodbMode.articleModel.find( { hot: true }, { _id: 0, title: 1 }, function (err, result) {
+    mongodbMode.articleModel.find( { hot: true }, { title: 1 }, function (err, result) {
         if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
         res.json( { status: 0, data: result } ) ;
     } )
@@ -352,4 +352,17 @@ handles.updateType = function (req, res) {
         if ( err ) res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
         res.json( resHandler.sendSuccess() ) ;
     } )
+} ;
+
+handles.getArticleListByType = function (req, res) {
+    const { pageNum, pageSize, articlePath } = req.body.data ;
+    const queryObject = articlePath === 'all' ? {} : { type: articlePath } ;
+    mongodbMode.articleModel.find( queryObject, { content: 0, from: 0, original: 0 } )
+        .sort( { _id: -1 } )
+        .skip( ( pageNum - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec( function (err, result) {
+            if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+            res.json( { status: 0, data: result } ) ;
+        } )
 } ;
