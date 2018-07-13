@@ -7,6 +7,8 @@ const mongodbMode = require( './mongodb-model' ) ;
 const countJs = require( '../count/count' ) ;
 const fileInfo = require( '../count/fileInfo' ) ;
 const tools = require( './tools' ) ;
+const path = require( 'path' ) ;
+
 
 handles.articleAdd = function ( req, res ) {
     const data = req.body.data ;
@@ -15,7 +17,7 @@ handles.articleAdd = function ( req, res ) {
         const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
         let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
         imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
-        fs.writeFile(`../public/images/articles_img/${imgName}`, dataBuffer, function(err) {
+        fs.writeFile( path.resolve( __dirname, `../public/images/articles_img/${ imgName }` ), dataBuffer, function(err) {
             if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) )
         }) ;
     }
@@ -56,7 +58,7 @@ handles.addNewTag = function ( req, res ) {
     } ).save( function (err) {
         if ( err ) res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
         countJs.tagCount ++ ;
-        fs.writeFile('../count/count.json', JSON.stringify( countJs ), function (err) {
+        fs.writeFile( path.resolve( __dirname, '../count/count.json' ), JSON.stringify( countJs ), function (err) {
             if ( err ) return console.log( err ) ;
             res.json( resHandler.sendSuccess() ) ;
         }) ;
@@ -165,7 +167,7 @@ handles.getFileInfo = function (req, res) {
 handles.changePostFile = function (req, res) {
     const data = req.body.data ;
     fileInfo.post = data.post ;
-    fs.writeFile('../count/fileInfo.json', JSON.stringify( fileInfo ), function (err) {
+    fs.writeFile( path.resolve( __dirname, '../count/fileInfo.json' ), JSON.stringify( fileInfo ), function (err) {
         if ( err ) return console.log( err ) ;
         res.json( resHandler.sendSuccess() ) ;
     }) ;
@@ -174,7 +176,7 @@ handles.changePostFile = function (req, res) {
 handles.changeToppingFile = function (req, res) {
     const data = req.body.data ;
     fileInfo.topping = data.topping ;
-    fs.writeFile('../count/fileInfo.json', JSON.stringify( fileInfo ), function (err) {
+    fs.writeFile( path.resolve( __dirname, '../count/fileInfo.json' ), JSON.stringify( fileInfo ), function (err) {
         if ( err ) return console.log( err ) ;
         res.json( resHandler.sendSuccess() ) ;
     }) ;
@@ -240,7 +242,7 @@ handles.updateArticle = function (req, res) {
                         const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
                         let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
                         imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
-                        fs.writeFile( `../public/images/articles_img/${imgName}`, dataBuffer, function(err) {
+                        fs.writeFile( path.resolve( __dirname, `../public/images/articles_img/${imgName}` ), dataBuffer, function(err) {
                             if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) ) ;
                             mongodbMode.articleModel.update( { _id: data._id }, {
                                 title: data.title,
@@ -296,7 +298,7 @@ handles.addNewType = function (req, res) {
     } ).save( function (err) {
         if ( err ) res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
         countJs.typeCount ++ ;
-        fs.writeFile('../count/count.json', JSON.stringify( countJs ), function (err) {
+        fs.writeFile( path.resolve( __dirname, '../count/count.json' ), JSON.stringify( countJs ), function (err) {
             if ( err ) return console.log( err ) ;
             res.json( resHandler.sendSuccess() ) ;
         }) ;
