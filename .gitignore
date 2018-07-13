@@ -4,9 +4,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-public/images/articles_img/*.jpeg
-public/images/articles_img/*.png
-public/images/articles_img/*.jgp
+public/images
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log
