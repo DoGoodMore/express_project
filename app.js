@@ -6,10 +6,16 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var bodyParser = require('body-parser');
 require( './util/mongodb' ) ;
 
 var app = express();
+
+
+//修改上传新的文章时 状态码为413的http请求错误 修改传输数据大小事上限值
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 
 app.use(logger('dev'));
