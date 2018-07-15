@@ -8,7 +8,7 @@ const countJs = require( '../count/count' ) ;
 const fileInfo = require( '../count/fileInfo' ) ;
 const tools = require( './tools' ) ;
 const path = require( 'path' ) ;
-
+//todo : 没有对参数进行判定验证 进格式和是否传入进行验证
 
 handles.articleAdd = function ( req, res ) {
     const data = req.body.data ;
@@ -367,4 +367,50 @@ handles.getArticleListByType = function (req, res) {
             if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
             res.json( { status: 0, data: result } ) ;
         } )
+} ;
+
+handles.sendMessage = function (req, res) {
+    const data = req.body.data ;
+    //todo : 进行存入操作的验证比如是否为空 是否符合规则等
+    new mongodbMode.messageModel( {
+        username: data.username,
+        email: data.email,
+        content: data.content
+    } ).save( function (err) {
+        if ( err ) res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.getMessagePage = function (req, res) {
+    const { pageNum, pageSize } = req.body.data ;
+    mongodbMode.messageModel.find( {} )
+        .sort( { _id: -1 } )
+        .skip( ( pageNum - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec( function (err, result) {
+            if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+            mongodbMode.messageModel.count( {}, function (err, count) {
+                if ( err ) res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+                res.json( { status: 0, data: result, total: count } ) ;
+            } )
+        } )
+} ;
+
+handles.deleteMessage = function (req, res) {
+    const data = req.body.data ;
+    if ( !data.id ) res.json( resHandler.createError( `SR-009`, `缺少id参数` ) ) ;
+    mongodbMode.messageModel.remove( { _id: data.id }, function (err) {
+        if ( err ) res.json( resHandler.createError( `SR-007`, `数据库删除错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.lookMessage = function (req, res) {
+    const { id } = req.body.data ;
+    if ( !id ) res.json( resHandler.createError( `SR-009`, `缺少必要的参数` ) ) ;
+    mongodbMode.messageModel.update( { _id: id }, { isRead: true }, function (err) {
+        if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
 } ;

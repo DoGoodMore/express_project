@@ -80,4 +80,16 @@ router.post( '/types/updateType', handle.updateType ) ;
 //根据文章类型获取对应的文章列表
 router.post( '/article/getArticleListByType', handle.getArticleListByType ) ;
 
+//发送消息接口
+router.post( '/message/sendMessage', handle.sendMessage ) ;
+
+//获取消息列表的分页数据
+router.post( '/message/getMessagePage', handle.getMessagePage ) ;
+
+//删除对应消息的接口
+router.post( '/message/deleteMessage', handle.deleteMessage ) ;
+
+//将对应消息标记为已读状态的接口
+router.post( '/message/lookMessage', handle.lookMessage ) ;
+
 module.exports = router ;

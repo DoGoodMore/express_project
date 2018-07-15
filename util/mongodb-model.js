@@ -53,15 +53,33 @@ const typeSchema = new Schema( {
     create: { type: Date, default: Date.now() } //创建时间
 } ) ;
 
+//消息列表数据库Model
+const MessageSchema = new Schema( {
+    username: String,//发送者的名称
+    email: String,//发送者的电子邮箱
+    sendTime: {//发送时间
+        type: Date,
+        default: Date.now()
+    },
+    isRead: { //是否已读
+        type: Boolean,
+        default: false
+    },
+    content: String//发送内容
+} ) ;
+
 const articleModel = mongoose.model( 'article', articleSchema ) ;
 
 const tagModel = mongoose.model( 'tag', tagSchema ) ;
 
 const typeModel = mongoose.model( 'type', typeSchema ) ;
 
+const messageModel = mongoose.model( 'message', MessageSchema ) ;
+
 module.exports = {
     articleModel,
     tagModel,
-    typeModel
+    typeModel,
+    messageModel
 } ;
 

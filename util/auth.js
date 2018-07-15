@@ -6,6 +6,7 @@ const handlers = module.exports ;
 //06 数据库更新错误
 //07 数据库删除错误
 //08 本地文件删除错误
+//09 缺少必要的参数
 handlers.createError = function ( errorObject, errorMessage ) {
     if ( errorObject ) {
         return {
