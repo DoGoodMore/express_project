@@ -1,4 +1,6 @@
 const mongoose = require( './mongodb' ) ;
+const bcrypt = require( 'bcrypt' ) ;
+
 
 const Schema  = mongoose.Schema ;
 
@@ -68,6 +70,47 @@ const MessageSchema = new Schema( {
     content: String//发送内容
 } ) ;
 
+//用户列表 数据库Model
+const UserSchema = new Schema( {
+    username: { //用户名
+        type: String,
+        unique: true, //不可重复约束
+        require: true
+    },
+    password: { //用户密码
+        type: String,
+        require: true
+    },
+    token: { //用户唯一标识的字串
+        type: String
+    }
+} ) ;
+
+//对用户保存的密码进行加密处理 确保用户的密码只有用户自己知道
+UserSchema.pre( 'save', function ( next ) {
+    const user = this ;
+    if ( this.isModified( 'password' ) || this.isNew ) {
+        bcrypt.genSalt( 10, function (err, salt) {
+            if ( err ) return next( err ) ;
+            bcrypt.hash( user.password, salt, function (err, hash) {
+                if ( err ) return next( err ) ;
+                user.password = hash ;
+                next() ;
+            } )
+        } )
+    } else {
+        return next() ;
+    }
+} ) ;
+
+//对用户输入的密码进行匹配 查看输入的密码是否正确
+UserSchema.methods.comparePassword = function (pwd, cb) {
+    bcrypt.compare( pwd, this.password, ( err, isMatch ) => {
+        if ( err ) return cb( err ) ;
+        cb( null, isMatch )
+    } )
+} ;
+
 const articleModel = mongoose.model( 'article', articleSchema ) ;
 
 const tagModel = mongoose.model( 'tag', tagSchema ) ;
@@ -76,10 +119,13 @@ const typeModel = mongoose.model( 'type', typeSchema ) ;
 
 const messageModel = mongoose.model( 'message', MessageSchema ) ;
 
+const userModel = mongoose.model( 'user', UserSchema ) ;
+
 module.exports = {
     articleModel,
     tagModel,
     typeModel,
-    messageModel
+    messageModel,
+    userModel
 } ;
 

@@ -8,6 +8,8 @@ const countJs = require( '../count/count' ) ;
 const fileInfo = require( '../count/fileInfo' ) ;
 const tools = require( './tools' ) ;
 const path = require( 'path' ) ;
+const jwt = require( 'jsonwebtoken' ) ;
+const config = require( '../config' ) ;
 //todo : 没有对参数进行判定验证 进格式和是否传入进行验证
 
 handles.articleAdd = function ( req, res ) {
@@ -412,5 +414,44 @@ handles.lookMessage = function (req, res) {
     mongodbMode.messageModel.update( { _id: id }, { isRead: true }, function (err) {
         if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
         res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.registerUser = function (req, res) {
+    const { username, password } = JSON.parse(req.body.data) ;
+    if ( !username || !password ) {
+        return res.json( resHandler.createError( `SR-009`, `缺少必要参数` ) ) ;
+    }
+    new mongodbMode.userModel( {
+        username,
+        password
+    } ).save( function (err) {
+        if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.loginByUsername = function (req, res) {
+    const { username, password } = req.body.data ;
+    mongodbMode.userModel.findOne( { username }, ( err, user ) => {
+        if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        if ( !user ) {
+            return res.json( { status: 2, message: '该用户不存在' } ) ;
+        } else {
+            //检测用户输入的密码是否正确
+            user.comparePassword( password, ( err, isMatch ) => {
+                if ( isMatch && !err ) {
+                    const token = jwt.sign( {}, config.secret, {} ) ;
+                    user.token = token ;
+                    user.save( function (err) {
+                        if ( err ) res.send( err ) ;
+                        //todo : 登录之后返回消息列表等
+                        res.json( { status: 0, message: '登录成功', token } ) ;
+                    } )
+                } else {
+                    res.json( { status: 2, message: '用户名或密码错误' } ) ;
+                }
+            } )
+        }
     } )
 } ;

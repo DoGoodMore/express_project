@@ -92,4 +92,10 @@ router.post( '/message/deleteMessage', handle.deleteMessage ) ;
 //将对应消息标记为已读状态的接口
 router.post( '/message/lookMessage', handle.lookMessage ) ;
 
+//注册用户的接口
+router.post( '/users/registerUser', handle.registerUser ) ;
+
+//用户登录接口
+router.post( '/users/loginByUsername', handle.loginByUsername ) ;
+
 module.exports = router ;
