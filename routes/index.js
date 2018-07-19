@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var handle = require( '../util/handle' ) ;
+const permission = require( '../middleware/permission' ) ;
+
+//对请求进行权限拦截
+router.use( '*', permission ) ;
 
 //处理添加文章上传新的图片
 router.post( '/article/add', handle.articleAdd ) ;
