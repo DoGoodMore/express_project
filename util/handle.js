@@ -455,3 +455,62 @@ handles.loginByUsername = function (req, res) {
         }
     } )
 } ;
+
+handles.addTodo = function (req, res) {
+    const { todoTitle, todoType, finishDate, content } = req.body.data ;
+    if ( !todoTitle || !todoType || !finishDate || !content ) return res.json( resHandler.createError( `SR-009`, `缺少必要参数` ) ) ;
+    new mongodbMode.todoModel( {
+        todoTitle,
+        todoType,
+        finishDate,
+        content
+    } ).save( function (err) {
+        if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.getTodosPage = function (req, res) {
+    const { isFinish, pageNum, pageSize } = req.body.data ;
+    const query = isFinish ? { isFinish: true } : {} ;
+    mongodbMode.todoModel.find( query )
+        .sort( { _id: -1 } )
+        .skip( ( pageNum - 1 ) * pageSize )
+        .limit( pageSize )
+        .exec( function (err, result) {
+            if ( err ) return res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+            mongodbMode.todoModel.count( {}, function (err, count) {
+                if ( err ) return res.json( resHandler.createError( 'SR-004', '数据库读取错误' ) ) ;
+                res.json( { status: 0, data: result, total: count } ) ;
+            } )
+        } )
+} ;
+
+handles.finishTodo = function (req, res) {
+    const { _id } = req.body.data ;
+    mongodbMode.todoModel.findOne( { _id }, function (err, todo) {
+        if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        todo.isFinish = true ;
+        todo.save( function (err) {
+            if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库数据存储错误` ) ) ;
+            res.json( resHandler.sendSuccess() ) ;
+        } )
+    } )
+} ;
+
+handles.deleteTodo = function (req, res) {
+    const { _id } = req.body.data ;
+    mongodbMode.todoModel.remove( { _id }, err => {
+        if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库操作失败` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;
+
+handles.updateTodo = function (req, res) {
+    const { todoTitle, todoType, finishDate, content, _id } = req.body.data ;
+    if ( !todoTitle || !todoType || !finishDate || !content ) return res.json( resHandler.createError( `SR-009`, `缺少必要参数` ) ) ;
+    mongodbMode.todoModel.updateOne( { _id }, { todoTitle, todoType, finishDate, content }, err => {
+        if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
+        res.json( resHandler.sendSuccess() ) ;
+    } )
+} ;

@@ -98,4 +98,19 @@ router.post( '/users/registerUser', handle.registerUser ) ;
 //用户登录接口
 router.post( '/users/loginByUsername', handle.loginByUsername ) ;
 
+//用户新增待办事项接口
+router.post( '/todos/addTodo', handle.addTodo ) ;
+
+//获取待办事项的分页接口
+router.post( '/todos/getTodosPage', handle.getTodosPage ) ;
+
+//完成指定事项的接口
+router.post( '/todos/finishTodo', handle.finishTodo ) ;
+
+//删除指定待办事项接口
+router.post( '/todos/deleteTodo', handle.deleteTodo ) ;
+
+//更新待办事项
+router.post( '/todos/updateTodo', handle.updateTodo ) ;
+
 module.exports = router ;

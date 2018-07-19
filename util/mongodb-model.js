@@ -83,6 +83,26 @@ const UserSchema = new Schema( {
     },
     token: { //用户唯一标识的字串
         type: String
+    },
+    create: { //用户创建时间
+        type: Date,
+        default: Date.now()
+    }
+} ) ;
+
+//用户待办事项列表 数据库Model
+const TodoSchema = new Schema( {
+    todoTitle: String, //待办事项的标题
+    todoType: '',//待办事项的类型(用户输入)
+    finishDate: '',//待办事项的计划完成时间( 用户传入 )
+    content: '',//待办事项的具体内容( 用户传入 )
+    create: {//待办事项的创建时间 服务器生成
+        type: Date,
+        default: Date.now()
+    },
+    isFinish: { //是否完成当前事项
+        type: Boolean,
+        default: false
     }
 } ) ;
 
@@ -121,11 +141,14 @@ const messageModel = mongoose.model( 'message', MessageSchema ) ;
 
 const userModel = mongoose.model( 'user', UserSchema ) ;
 
+const todoModel = mongoose.model( 'todo', TodoSchema ) ;
+
 module.exports = {
     articleModel,
     tagModel,
     typeModel,
     messageModel,
-    userModel
+    userModel,
+    todoModel
 } ;
 
