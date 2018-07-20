@@ -18,7 +18,7 @@ handles.articleAdd = function ( req, res ) {
     if ( data[ 'imgFile' ] ) {
         const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
         let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
-        imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
+        imgUrl = `http://${serviceInfo.ip}/images/articles_img/${imgName}` ;
         fs.writeFile( path.resolve( __dirname, `../public/images/articles_img/${ imgName }` ), dataBuffer, function(err) {
             if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) )
         }) ;
