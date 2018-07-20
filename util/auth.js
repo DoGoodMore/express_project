@@ -27,8 +27,12 @@ handlers.createError = function ( errorObject, errorMessage ) {
     }
 } ;
 
-handlers.sendSuccess = function () {
-    return {
+handlers.sendSuccess = function ( hasToken ) {
+    return hasToken ? {
+        status: 0,
+        message: '操作成功',
+        token: hasToken
+    } : {
         status: 0,
         message: '操作成功'
     }

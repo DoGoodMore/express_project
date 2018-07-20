@@ -43,8 +43,8 @@ handles.articleAdd = function ( req, res ) {
         views: 0,
         poster: imgUrl
     } ).save( function ( err ) {
-        if ( err ) res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
-        res.json( resHandler.sendSuccess() )
+        if ( err ) return res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -58,11 +58,11 @@ handles.addNewTag = function ( req, res ) {
         background: data.background,
         color: data.color
     } ).save( function (err) {
-        if ( err ) res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
+        if ( err ) return res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
         countJs.tagCount ++ ;
         fs.writeFile( path.resolve( __dirname, '../count/count.json' ), JSON.stringify( countJs ), function (err) {
             if ( err ) return console.log( err ) ;
-            res.json( resHandler.sendSuccess() ) ;
+            res.json( resHandler.sendSuccess( req.token ) ) ;
         }) ;
     } )
 } ;
@@ -88,16 +88,16 @@ handles.updateTag = function (req, res) {
     mongodbMode.tagModel.updateOne( { _id: data._id },
         { label: data.label, color: data.color, background: data.background, update: Date.now() },
         function ( err ) {
-            if ( err ) res.json( resHandler.createError( 'SR-006', '数据库更新错误' ) ) ;
-            res.json( resHandler.sendSuccess() ) ;
+            if ( err ) return res.json( resHandler.createError( 'SR-006', '数据库更新错误' ) ) ;
+            res.json( resHandler.sendSuccess( req.token ) ) ;
         })
 } ;
 
 handles.delTag = function (req, res) {
     const data = req.body.data ;
     mongodbMode.tagModel.remove( { _id: data._id }, function (err) {
-        if ( err ) res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -111,8 +111,8 @@ handles.getAllTags = function (req, res) {
 handles.updateHotTags = function (req, res) {
     const data = req.body.data ;
     mongodbMode.tagModel.updateOne( { _id: data._id }, { hot: data.hot }, function (err) {
-        if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -142,16 +142,16 @@ handles.getArticleListPage = function (req, res) {
 handles.delArticle = function (req, res) {
     const data = req.body.data ;
     mongodbMode.articleModel.remove( { _id: data._id }, function (err) {
-        if ( err ) res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } ) ;
 } ;
 
 handles.updateArticleHot = function (req, res) {
     const data = req.body.data ;
     mongodbMode.articleModel.updateOne( { _id: data._id }, { hot: data.hot }, function (err) {
-        if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -171,7 +171,7 @@ handles.changePostFile = function (req, res) {
     fileInfo.post = data.post ;
     fs.writeFile( path.resolve( __dirname, '../count/fileInfo.json' ), JSON.stringify( fileInfo ), function (err) {
         if ( err ) return console.log( err ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     }) ;
 } ;
 
@@ -180,7 +180,7 @@ handles.changeToppingFile = function (req, res) {
     fileInfo.topping = data.topping ;
     fs.writeFile( path.resolve( __dirname, '../count/fileInfo.json' ), JSON.stringify( fileInfo ), function (err) {
         if ( err ) return console.log( err ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     }) ;
 } ;
 
@@ -234,18 +234,18 @@ handles.updateArticle = function (req, res) {
     const data = req.body.data ;
     if ( data[ `imgFile` ] ) {
         mongodbMode.articleModel.findOne( { _id: data._id }, { poster: 1, _id: 0 }, function (err, result) {
-            if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+            if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
             if ( result[ `poster` ] ) {
                 const imgUrl = result[ `poster` ].replace( `http://${serviceInfo.ip}:${serviceInfo.port}`, `` ) ;
                 fs.unlink( `../public${imgUrl}`, function (err) {
-                    if ( err ) res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
+                    if ( err ) return res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
                     let imgUrl = '' ;
                     if ( data[ 'imgFile' ] ) {
                         const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
                         let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
                         imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
                         fs.writeFile( path.resolve( __dirname, `../public/images/articles_img/${imgName}` ), dataBuffer, function(err) {
-                            if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) ) ;
+                            if ( err ) return res.json( resHandler.createError( 'SR-002', '图片存储错误' ) ) ;
                             mongodbMode.articleModel.update( { _id: data._id }, {
                                 title: data.title,
                                 author: data.author || 'xyzzzzz',
@@ -260,8 +260,8 @@ handles.updateArticle = function (req, res) {
                                 },
                                 poster: imgUrl
                             }, function (err) {
-                                if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
-                                res.json( resHandler.sendSuccess() ) ;
+                                if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+                                res.json( resHandler.sendSuccess( req.token ) ) ;
                             } )
                         }) ;
                     }
@@ -298,11 +298,11 @@ handles.addNewType = function (req, res) {
         typeSort: typeLevel === 1 ? ( typeSort ? typeSort : 0 ) : 0,
         value: countJs.typeCount,
     } ).save( function (err) {
-        if ( err ) res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
+        if ( err ) return res.json( resHandler.createError( 'SR-003', '数据库存入错误' ) ) ;
         countJs.typeCount ++ ;
         fs.writeFile( path.resolve( __dirname, '../count/count.json' ), JSON.stringify( countJs ), function (err) {
             if ( err ) return console.log( err ) ;
-            res.json( resHandler.sendSuccess() ) ;
+            res.json( resHandler.sendSuccess( req.token ) ) ;
         }) ;
     } ) ;
 } ;
@@ -333,8 +333,8 @@ handles.getFirstTypeList = function (req, res) {
 handles.delType = function (req, res) {
     const data = req.body.data ;
     mongodbMode.typeModel.remove( { _id: data.id }, function (err) {
-        if ( err ) res.json( resHandler.createError( `SR-007`, `数据库删除失败` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( `SR-007`, `数据库删除失败` ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -353,8 +353,8 @@ handles.updateType = function (req, res) {
         upperType: typeLevel === 1 ? 1 : upperType,
         typeSort: typeLevel === 1 ? ( typeSort ? typeSort : 0 ) : 0
     }, function (err) {
-        if ( err ) res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -401,19 +401,19 @@ handles.getMessagePage = function (req, res) {
 
 handles.deleteMessage = function (req, res) {
     const data = req.body.data ;
-    if ( !data.id ) res.json( resHandler.createError( `SR-009`, `缺少id参数` ) ) ;
+    if ( !data.id ) return res.json( resHandler.createError( `SR-009`, `缺少id参数` ) ) ;
     mongodbMode.messageModel.remove( { _id: data.id }, function (err) {
-        if ( err ) res.json( resHandler.createError( `SR-007`, `数据库删除错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( `SR-007`, `数据库删除错误` ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
 handles.lookMessage = function (req, res) {
     const { id } = req.body.data ;
-    if ( !id ) res.json( resHandler.createError( `SR-009`, `缺少必要的参数` ) ) ;
+    if ( !id ) return res.json( resHandler.createError( `SR-009`, `缺少必要的参数` ) ) ;
     mongodbMode.messageModel.update( { _id: id }, { isRead: true }, function (err) {
-        if ( err ) res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -466,7 +466,7 @@ handles.addTodo = function (req, res) {
         content
     } ).save( function (err) {
         if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库存储错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -493,7 +493,7 @@ handles.finishTodo = function (req, res) {
         todo.isFinish = true ;
         todo.save( function (err) {
             if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库数据存储错误` ) ) ;
-            res.json( resHandler.sendSuccess() ) ;
+            res.json( resHandler.sendSuccess( req.token ) ) ;
         } )
     } )
 } ;
@@ -502,7 +502,7 @@ handles.deleteTodo = function (req, res) {
     const { _id } = req.body.data ;
     mongodbMode.todoModel.remove( { _id }, err => {
         if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库操作失败` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
 
@@ -511,6 +511,6 @@ handles.updateTodo = function (req, res) {
     if ( !todoTitle || !todoType || !finishDate || !content ) return res.json( resHandler.createError( `SR-009`, `缺少必要参数` ) ) ;
     mongodbMode.todoModel.updateOne( { _id }, { todoTitle, todoType, finishDate, content }, err => {
         if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
-        res.json( resHandler.sendSuccess() ) ;
+        res.json( resHandler.sendSuccess( req.token ) ) ;
     } )
 } ;
