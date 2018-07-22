@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
                         user.save( (err) => {
                             if ( err ) return res.json( resHandles.createError( `SR-006`, `数据库更新失败` ) ) ;
                             req.token = newToken ;
-                            console.log( req.token )
+                            req.__user__ = user.username ;
                             next() ;
                         } )
                     } else {

@@ -25,7 +25,7 @@ handles.articleAdd = function ( req, res ) {
     }
     new mongodbMode.articleModel( {
         title: data[ 'title' ],
-        author: data[ 'author' ],
+        author: req[ `__user__` ],
         content: data[ 'content' ],
         tags: data[ 'tags' ],
         create: Date.now(),
@@ -39,7 +39,7 @@ handles.articleAdd = function ( req, res ) {
         from: {
             author: data.original ? '' : data.from.author,
             fromUrl: data.original ? '' : data.from.fromUrl
-},
+        },
         views: 0,
         poster: imgUrl
     } ).save( function ( err ) {
