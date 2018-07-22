@@ -497,11 +497,10 @@ handles.finishTodo = function (req, res) {
     const { _id } = req.body.data ;
     mongodbMode.todoModel.findOne( { _id }, function (err, todo) {
         if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
-        todo.isFinish = true ;
-        todo.save( function (err) {
+        todo.completeTodo( function (err) {
             if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库数据存储错误` ) ) ;
             res.json( resHandler.sendSuccess( req.token ) ) ;
-        } )
+        } ) ;
     } )
 } ;
 
