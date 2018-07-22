@@ -18,7 +18,7 @@ handles.articleAdd = function ( req, res ) {
     if ( data[ 'imgFile' ] ) {
         const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
         let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
-        imgUrl = `http://${serviceInfo.ip}/images/articles_img/${imgName}` ;
+        imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
         fs.writeFile( path.resolve( __dirname, `../public/images/articles_img/${ imgName }` ), dataBuffer, function(err) {
             if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) )
         }) ;
@@ -141,9 +141,16 @@ handles.getArticleListPage = function (req, res) {
 
 handles.delArticle = function (req, res) {
     const data = req.body.data ;
-    mongodbMode.articleModel.remove( { _id: data._id }, function (err) {
-        if ( err ) return res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
-        res.json( resHandler.sendSuccess( req.token ) ) ;
+    mongodbMode.articleModel.findOne( { _id: data._id }, function (err, article) {
+        if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        const imgUrl = article.poster.replace( `http://${serviceInfo.ip}:${serviceInfo.port}`, '' ) ;
+        fs.unlink( path.resolve( __dirname, `../public${imgUrl}` ), function (err) {
+            if ( err ) return res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
+            mongodbMode.articleModel.remove( { _id: data._id }, function (err) {
+                if ( err ) return res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
+                res.json( resHandler.sendSuccess( req.token ) ) ;
+            } ) ;
+        })
     } ) ;
 } ;
 
@@ -237,7 +244,7 @@ handles.updateArticle = function (req, res) {
             if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
             if ( result[ `poster` ] ) {
                 const imgUrl = result[ `poster` ].replace( `http://${serviceInfo.ip}:${serviceInfo.port}`, `` ) ;
-                fs.unlink( `../public${imgUrl}`, function (err) {
+                fs.unlink( path.resolve( __dirname, `../public${imgUrl}` ), function (err) {
                     if ( err ) return res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
                     let imgUrl = '' ;
                     if ( data[ 'imgFile' ] ) {
