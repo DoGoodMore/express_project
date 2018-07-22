@@ -418,7 +418,10 @@ handles.lookMessage = function (req, res) {
 } ;
 
 handles.registerUser = function (req, res) {
-    const { username, password } = JSON.parse(req.body.data) ;
+    const { username, password, registerKey } = JSON.parse(req.body.data) ;
+    if ( !registerKey === 'KF35D' ) {
+        return res.json( resHandler.createError( `SR-010`, `该操作不被允许` ) ) ;
+    }
     if ( !username || !password ) {
         return res.json( resHandler.createError( `SR-009`, `缺少必要参数` ) ) ;
     }
