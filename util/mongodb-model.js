@@ -100,6 +100,7 @@ const TodoSchema = new Schema( {
         type: Date,
         default: Date.now()
     },
+    completeDate: Date,//待办事项的完成日期
     isFinish: { //是否完成当前事项
         type: Boolean,
         default: false
@@ -128,6 +129,15 @@ UserSchema.methods.comparePassword = function (pwd, cb) {
     bcrypt.compare( pwd, this.password, ( err, isMatch ) => {
         if ( err ) return cb( err ) ;
         cb( null, isMatch )
+    } )
+} ;
+//进行用户完成对应的待办事项的调用事件 记录完成时间完成状态等
+TodoSchema.methods.completeTodo = function (cb) {
+    this.isFinish = true ;
+    this.completeDate = Date.now() ;
+    this.save( (err) => {
+        if ( err ) return cb( err ) ;
+        cb( null ) ;
     } )
 } ;
 

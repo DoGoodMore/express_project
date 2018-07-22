@@ -18,14 +18,14 @@ handles.articleAdd = function ( req, res ) {
     if ( data[ 'imgFile' ] ) {
         const dataBuffer = new Buffer( data[ 'imgFile' ], 'base64' ) ;
         let imgName = `${Date.now()}.${data[ 'fileType' ].split( '/' )[ 1 ]}` ;
-        imgUrl = `http://${serviceInfo.ip}/images/articles_img/${imgName}` ;
+        imgUrl = `http://${serviceInfo.ip}:${serviceInfo.port}/images/articles_img/${imgName}` ;
         fs.writeFile( path.resolve( __dirname, `../public/images/articles_img/${ imgName }` ), dataBuffer, function(err) {
             if ( err ) res.json( resHandler.createError( 'SR-002', '图片存储错误' ) )
         }) ;
     }
     new mongodbMode.articleModel( {
         title: data[ 'title' ],
-        author: data[ 'author' ],
+        author: req[ `__user__` ],
         content: data[ 'content' ],
         tags: data[ 'tags' ],
         create: Date.now(),
@@ -39,7 +39,7 @@ handles.articleAdd = function ( req, res ) {
         from: {
             author: data.original ? '' : data.from.author,
             fromUrl: data.original ? '' : data.from.fromUrl
-},
+        },
         views: 0,
         poster: imgUrl
     } ).save( function ( err ) {
@@ -141,9 +141,16 @@ handles.getArticleListPage = function (req, res) {
 
 handles.delArticle = function (req, res) {
     const data = req.body.data ;
-    mongodbMode.articleModel.remove( { _id: data._id }, function (err) {
-        if ( err ) return res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
-        res.json( resHandler.sendSuccess( req.token ) ) ;
+    mongodbMode.articleModel.findOne( { _id: data._id }, function (err, article) {
+        if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+        const imgUrl = article.poster.replace( `http://${serviceInfo.ip}:${serviceInfo.port}`, '' ) ;
+        fs.unlink( path.resolve( __dirname, `../public${imgUrl}` ), function (err) {
+            if ( err ) return res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
+            mongodbMode.articleModel.remove( { _id: data._id }, function (err) {
+                if ( err ) return res.json( resHandler.createError( 'SR-007', '数据库删除错误' ) ) ;
+                res.json( resHandler.sendSuccess( req.token ) ) ;
+            } ) ;
+        })
     } ) ;
 } ;
 
@@ -201,6 +208,10 @@ handles.getArticleDetail = function (req, res) {
                 } )
             }
             res.json( { status: 0, data: result[ 0 ], pre: pre, next: next } ) ;
+            result[ 0 ].views ++ ;
+            result[ 0 ].save( (err) => {
+                if ( err ) return console.log( '文章预览数量计入失败' ) ;
+            } )
         } ) ;
 
     } )
@@ -237,7 +248,7 @@ handles.updateArticle = function (req, res) {
             if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
             if ( result[ `poster` ] ) {
                 const imgUrl = result[ `poster` ].replace( `http://${serviceInfo.ip}:${serviceInfo.port}`, `` ) ;
-                fs.unlink( `../public${imgUrl}`, function (err) {
+                fs.unlink( path.resolve( __dirname, `../public${imgUrl}` ), function (err) {
                     if ( err ) return res.json( resHandler.createError( `SR-008`, `本地文件删除错误` ) ) ;
                     let imgUrl = '' ;
                     if ( data[ 'imgFile' ] ) {
@@ -493,11 +504,10 @@ handles.finishTodo = function (req, res) {
     const { _id } = req.body.data ;
     mongodbMode.todoModel.findOne( { _id }, function (err, todo) {
         if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
-        todo.isFinish = true ;
-        todo.save( function (err) {
+        todo.completeTodo( function (err) {
             if ( err ) return res.json( resHandler.createError( `SR-004`, `数据库数据存储错误` ) ) ;
             res.json( resHandler.sendSuccess( req.token ) ) ;
-        } )
+        } ) ;
     } )
 } ;
 
