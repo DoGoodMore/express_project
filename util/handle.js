@@ -208,6 +208,10 @@ handles.getArticleDetail = function (req, res) {
                 } )
             }
             res.json( { status: 0, data: result[ 0 ], pre: pre, next: next } ) ;
+            result[ 0 ].views ++ ;
+            result[ 0 ].save( (err) => {
+                if ( err ) return console.log( '文章预览数量计入失败' ) ;
+            } )
         } ) ;
 
     } )
