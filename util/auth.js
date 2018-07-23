@@ -7,6 +7,7 @@ const handlers = module.exports ;
 //07 数据库删除错误
 //08 本地文件删除错误
 //09 缺少必要的参数
+//10 该操作不被允许
 handlers.createError = function ( errorObject, errorMessage ) {
     if ( errorObject ) {
         return {
