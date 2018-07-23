@@ -32,9 +32,9 @@ handles.articleAdd = function ( req, res ) {
         update: Date.now(),
         comments: [],
         description:  data[ 'description' ],
-        good: 0,
+        good: [],
         type: data[ `articleType` ],
-        noGood: 0,
+        noGood: [],
         original: data.original,
         from: {
             author: data.original ? '' : data.from.author,
@@ -193,9 +193,16 @@ handles.changeToppingFile = function (req, res) {
 
 handles.getArticleDetail = function (req, res) {
     const data = req.body.data ;
+    const userIP = req.ip.match( /\d+\.\d+\.\d+\.\d+/ )[ 0 ] ;
+    console.log( userIP ) ;
     mongodbMode.articleModel.find( { _id: data.id }, function (err, result) {
         if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
         //todo : 待优化
+        //todo: 判断当前IP的用户是否已经点赞过
+        const { good, noGood } = result[ 0 ] ;
+        let isLikeArticle = false, isNotLikeArticle = false ;
+        if ( good && good.length ) isLikeArticle = !!good.find( item => item.ip === userIP ) ;
+        if ( noGood && noGood.length ) isNotLikeArticle = !!noGood.find( item => item.ip === userIP ) ;
         mongodbMode.articleModel.find( {}, { title: 1 }, function (err, allArray) {
             if ( err ) res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
             let pre = null, next = null ;
@@ -207,7 +214,13 @@ handles.getArticleDetail = function (req, res) {
                     }
                 } )
             }
-            res.json( { status: 0, data: result[ 0 ], pre: pre, next: next } ) ;
+            res.json( {
+                status: 0,
+                data: result[ 0 ],
+                pre: pre, next: next,
+                isLike: isLikeArticle,
+                isNotLike: isNotLikeArticle
+            } ) ;
             result[ 0 ].views ++ ;
             result[ 0 ].save( (err) => {
                 if ( err ) return console.log( '文章预览数量计入失败' ) ;
@@ -456,8 +469,10 @@ handles.loginByUsername = function (req, res) {
                     user.token = token ;
                     user.save( function (err) {
                         if ( err ) res.send( err ) ;
-                        //todo : 登录之后返回消息列表等
-                        res.json( { status: 0, message: '登录成功', token } ) ;
+                        mongodbMode.messageModel.count( { isRead: false }, function (err, count) {
+                            if ( err ) return res.json( resHandler.createError( `SR-003`, `数据库读取错误` ) ) ;
+                            res.json( { status: 0, message: '登录成功', token, messageCount: count } ) ;
+                        } )
                     } )
                 } else {
                     res.json( { status: 2, message: '用户名或密码错误' } ) ;
@@ -522,5 +537,43 @@ handles.updateTodo = function (req, res) {
     mongodbMode.todoModel.updateOne( { _id }, { todoTitle, todoType, finishDate, content }, err => {
         if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新错误` ) ) ;
         res.json( resHandler.sendSuccess( req.token ) ) ;
+    } )
+} ;
+
+handles.likeArticle = function (req, res) {
+    const { _id } = req.body.data ;
+    const userIP = req.ip.match( /\d+\.\d+\.\d+\.\d+/ )[ 0 ] ;
+    mongodbMode.articleModel.findOne( { _id }, function (err, article) {
+        const { good } = article ;
+        if (
+            good.find( item => item.ip === userIP )
+        ) return res.json( { status: 5, message: '对不起, 您已经赞过了哟' } ) ;
+        good.push( {
+            ip: userIP,
+            time: Date.now()
+        } ) ;
+        article.save( function (err) {
+            if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新失败` ) ) ;
+            res.json( resHandler.sendSuccess() ) ;
+        } )
+    } )
+} ;
+
+handles.notLikeArticle = function (req, res) {
+    const { _id } = req.body.data ;
+    const userIP = req.ip.match( /\d+\.\d+\.\d+\.\d+/ )[ 0 ] ;
+    mongodbMode.articleModel.findOne( { _id }, function (err, article) {
+        const { noGood } = article ;
+        if (
+            noGood.find( item => item.ip === userIP )
+        ) return res.json( { status: 5, message: '对不起, 您已经赞过了哟' } ) ;
+        noGood.push( {
+            ip: userIP,
+            time: Date.now()
+        } ) ;
+        article.save( function (err) {
+            if ( err ) return res.json( resHandler.createError( `SR-006`, `数据库更新失败` ) ) ;
+            res.json( resHandler.sendSuccess() ) ;
+        } )
     } )
 } ;

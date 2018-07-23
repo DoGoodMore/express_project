@@ -51,7 +51,7 @@ router.post( '/common/changePostFile', handle.changePostFile ) ;
 //修改网站的置顶内容
 router.post( '/common/changeToppingFile', handle.changeToppingFile ) ;
 
-//获取文章
+//获取文章详情
 router.post( '/article/getArticleDetail', handle.getArticleDetail ) ;
 
 //获取相似文章列表
@@ -116,5 +116,11 @@ router.post( '/todos/deleteTodo', handle.deleteTodo ) ;
 
 //更新待办事项
 router.post( '/todos/updateTodo', handle.updateTodo ) ;
+
+//为文章点赞
+router.post( '/article/likeArticle', handle.likeArticle ) ;
+
+//为文章点踩
+router.post( '/article/notLikeArticle', handle.notLikeArticle ) ;
 
 module.exports = router ;

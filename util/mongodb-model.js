@@ -21,8 +21,18 @@ const articleSchema = new Schema( {
     type: String,
     description: String, //文章描述
     tags: Array, //文章标签
-    good: Number, //点赞数
-    noGood: Number, //踩数
+    good: [
+        {
+            ip: String, //点赞人的IP地址
+            time: Date //点赞时间
+        }
+    ], //点赞数
+    noGood: [
+        {
+            ip: String, //下踩人的IP地址
+            time: Date //下踩时间
+        }
+    ], //踩数
     views: { type: Number, default: 0 },
     original: Boolean, //是否原创
     from: {
