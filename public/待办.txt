@@ -27,4 +27,4 @@
 25.关于在vue中实现动画过渡效果
 26.如何对格式化列表进行tab切换及其遇到的问题 与解决方法(博客项目中的demo列表交互处理方案2 1)
 
-//获取本机IP http://pv.sohu.com/cityjson?ie=utf-8
+//获取本机IP http://pv.sohu.com/cityjson?ie=utf-8 get 请求
